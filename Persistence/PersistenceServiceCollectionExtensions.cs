@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +12,8 @@ public static class PersistenceServiceCollectionExtensions
     {
         services.AddDbContext<DataContext>(opt =>
         {
-            opt.UseMySQL(configuration.GetConnectionString("Default"));
+            opt.UseMySQL(configuration.GetConnectionString("Default"),
+                x => x.MigrationsAssembly(Assembly.GetExecutingAssembly().ToString()));
         });
 
         return services;
