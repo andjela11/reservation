@@ -1,9 +1,10 @@
-﻿using Domain;
+﻿using Application.Interfaces;
+using Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Persistence;
 
-public class DataContext : DbContext
+public class DataContext : DbContext, IDataContext
 {
     public DbSet<Reservation> Reservations { get; set; }
 
