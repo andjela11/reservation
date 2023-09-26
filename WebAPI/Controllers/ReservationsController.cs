@@ -29,6 +29,7 @@ public class ReservationsController : ControllerBase
     [HttpGet("{id:int}")]
     [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ReservationDto))]
     [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "Reservation with the given id couldn't be found")]
+    [SwaggerResponse((int)HttpStatusCode.UnprocessableEntity, Description = "Validation error")]
     [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Unexpected event occured")]
     public async Task<ActionResult<ReservationDto>> GetReservationAsync(int id)
     {
