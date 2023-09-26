@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using Application.Contracts;
-using Application.Features.Commands;
 using Application.Features.Commands.CreateReservation;
 using Application.Features.Queries.GetReservation;
 using MediatR;
@@ -59,13 +58,8 @@ public class ReservationsController : ControllerBase
     {
         var createReservationCommand = new CreateReservationCommand(reservationDto);
 
-        var id= await this._mediator.Send(createReservationCommand, new CancellationToken());
+        var id = await _mediator.Send(createReservationCommand, new CancellationToken());
 
-        if (id > 0)
-        {
-            return Created("reservations/{id}", id);
-        }
-
-        return BadRequest("Something went wrong");
+        return Created("reservations/{id}", id);
     }
 }
