@@ -1,4 +1,4 @@
-using Application.Contracts;
+﻿using Application.Contracts;
 using Application.Features.Commands.CreateReservation;
 using Application.Interfaces;
 using Domain;
@@ -28,15 +28,15 @@ public class CreateReservationCommandHandlerTests
         _systemUnderTest = new CreateReservationCommandHandler(_mockDataContext.Object);
 
         var createReservationDto = new CreateReservationDto(2, 200);
-        
+
         // Act 
         var result = await _systemUnderTest.Handle(new CreateReservationCommand(createReservationDto),
             new CancellationToken());
-        
+
         // Assert
         result.Should().BeOfType(typeof(int));
-        _mockDataContext.Verify(dataContext 
-            => dataContext.SaveChangesAsync(new CancellationToken()), 
+        _mockDataContext.Verify(dataContext
+            => dataContext.SaveChangesAsync(new CancellationToken()),
             Times.Once());
     }
 }

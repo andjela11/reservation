@@ -11,7 +11,7 @@ public class CreateReservationCommandHandler : IRequestHandler<CreateReservation
     {
         _context = context;
     }
-    
+
     public async Task<int> Handle(CreateReservationCommand request, CancellationToken cancellationToken)
     {
         var reservation = request.ReservationDto.ToCreateReservation();
