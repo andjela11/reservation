@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.Json;
-using WebAPI.Models;
 using FluentValidation;
+using WebAPI.Models;
 
 namespace WebAPI.Middleware;
 
@@ -9,7 +9,7 @@ public class ExceptionMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<ExceptionMiddleware> _logger;
-    
+
     public ExceptionMiddleware(RequestDelegate next, ILogger<ExceptionMiddleware> logger)
     {
         _next = next;
@@ -31,7 +31,7 @@ public class ExceptionMiddleware
                     x => x.ErrorMessage,
                     (propertyName, errorMessages) => new
                     {
-                        Key = propertyName, 
+                        Key = propertyName,
                         Values = errorMessages.Distinct().ToArray()
                     })
                 .ToDictionary(x => x.Key, x => x.Values);

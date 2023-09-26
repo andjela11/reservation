@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using Application.Contracts;
+using Application.Features.Commands.CreateReservation;
 using Application.Features.Queries.GetReservation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -41,5 +42,24 @@ public class ReservationsController : ControllerBase
             return Ok(reservation);
         }
         return NotFound();
+    }
+
+    /// <summary>
+    /// Creates the reservation entity based on specified parameter
+    /// </summary>
+    /// <param name="reservationDto">Object that contains parameters from which new entity is being created</param>
+    /// <returns>Id of the created object</returns>
+    [HttpPost]
+    [SwaggerResponse((int)HttpStatusCode.Created)]
+    [SwaggerResponse((int)HttpStatusCode.BadRequest)]
+    [SwaggerResponse((int)HttpStatusCode.UnprocessableEntity, Description = "Validation Error")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
+    public async Task<ActionResult> CreateReservationAsync([FromBody] CreateReservationDto reservationDto)
+    {
+        var createReservationCommand = new CreateReservationCommand(reservationDto);
+
+        var id = await _mediator.Send(createReservationCommand, new CancellationToken());
+
+        return Created("reservations/{id}", id);
     }
 }
