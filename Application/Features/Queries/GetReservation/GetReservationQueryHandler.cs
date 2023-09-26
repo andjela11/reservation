@@ -11,12 +11,12 @@ public sealed class GetReservationQueryHandler : IRequestHandler<GetReservationQ
 
     public GetReservationQueryHandler(IDataContext context)
     {
-        this._context = context;
+        _context = context;
     }
-    
+
     public async Task<ReservationDto?> Handle(GetReservationQuery request, CancellationToken cancellationToken)
     {
-        var reservation = await this._context.Reservations
+        var reservation = await _context.Reservations
                 .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (reservation is null)
         {

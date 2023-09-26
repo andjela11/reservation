@@ -1,4 +1,5 @@
-﻿using Application;
+﻿using System.Reflection;
+using Application;
 using Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,7 +14,13 @@ builder.Services
     .AddPersistenceServices(builder.Configuration)
     .AddApplicationServices();
 
-const string policyName = "AllowAll";
+builder.Services.AddSwaggerGen(c =>
+{
+    var callingAssemblyName = Assembly.GetEntryAssembly()?.GetName().Name;
+    var xmlFile = $"{callingAssemblyName}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+});
 
 var app = builder.Build();
 

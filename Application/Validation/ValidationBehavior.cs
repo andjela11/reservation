@@ -8,19 +8,19 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
 {
     private readonly IEnumerable<IValidator<TRequest>> _validators;
 
-    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators) => this._validators = validators;
-    
+    public ValidationBehavior(IEnumerable<IValidator<TRequest>> validators) => _validators = validators;
+
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
-        if (!this._validators.Any())
+        if (!_validators.Any())
         {
             return await next();
         }
 
         var context = new ValidationContext<TRequest>(request);
 
-        var errorsDictionary = this._validators
+        var errorsDictionary = _validators
             .Select(x => x.Validate(context))
             .SelectMany(x => x.Errors)
             .ToList();
@@ -29,7 +29,7 @@ public sealed class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
         {
             throw new ValidationException(errorsDictionary);
         }
-        
+
         return await next();
     }
 }
