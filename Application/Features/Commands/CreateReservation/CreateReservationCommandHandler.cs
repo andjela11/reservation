@@ -3,7 +3,7 @@ using MediatR;
 
 namespace Application.Features.Commands.CreateReservation;
 
-public class CreateReservationCommandHandler : IRequestHandler<CreateReservationCommand, int>
+public sealed class CreateReservationCommandHandler : IRequestHandler<CreateReservationCommand, int>
 {
     private readonly IDataContext _context;
 

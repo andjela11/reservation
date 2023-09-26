@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Application.Contracts;
 using Application.Features.Commands.CreateReservation;
+using Application.Features.Commands.UpdateReservation;
 using Application.Features.Queries.GetReservation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -61,5 +62,23 @@ public class ReservationsController : ControllerBase
         var id = await _mediator.Send(createReservationCommand, new CancellationToken());
 
         return Created("reservations/{id}", id);
+    }
+
+    /// <summary>
+    /// Finds reservation entity based on Id property and updates entity with new parameters
+    /// </summary>
+    /// <param name="updateReservationDto"></param>
+    /// <returns></returns>
+    [HttpPut]
+    [SwaggerResponse((int)HttpStatusCode.OK)]
+    [SwaggerResponse((int)HttpStatusCode.BadRequest)]
+    [SwaggerResponse((int)HttpStatusCode.UnprocessableEntity, Description = "Validation Error")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
+    public async Task<ActionResult> UpdateMovieAsync([FromBody] UpdateReservationDto updateReservationDto)
+    {
+        var updateReservationCommand = new UpdateReservationCommand(updateReservationDto);
+        await _mediator.Send(updateReservationCommand, new CancellationToken());
+
+        return Ok();
     }
 }
