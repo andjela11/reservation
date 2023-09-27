@@ -27,7 +27,7 @@ public class DeleteReservationCommandHandlerTests
         _systemUnderTest = new DeleteReservationCommandHandler(_mockContext.Object);
 
         // Act
-        var result = await _systemUnderTest.Handle(new DeleteReservationCommand(idToDelete), new CancellationToken());
+        await _systemUnderTest.Handle(new DeleteReservationCommand(idToDelete), new CancellationToken());
 
         // Assert
         _mockContext.Verify(p => p.Reservations.Remove(reservations.First()), Times.Once);

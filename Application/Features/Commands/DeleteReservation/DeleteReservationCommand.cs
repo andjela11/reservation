@@ -2,5 +2,5 @@
 
 namespace Application.Features.Commands.DeleteReservation;
 
-public record DeleteReservationCommand(int Id) : IRequest<Unit>;
+public record DeleteReservationCommand(int Id) : IRequest;
 
