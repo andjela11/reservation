@@ -1,4 +1,5 @@
 ﻿using Application.Contracts;
+using Application.Exceptions;
 using Application.Interfaces;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ public sealed class GetReservationQueryHandler : IRequestHandler<GetReservationQ
                 .SingleOrDefaultAsync(x => x.Id == request.Id, cancellationToken);
         if (reservation is null)
         {
-            throw new Exception("Entity not found");
+            throw new EntityNotFoundException("Entity not found");
         }
 
         return ReservationDto.FromReservation(reservation);

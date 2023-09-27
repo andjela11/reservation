@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
+using Application.Exceptions;
 using FluentValidation;
 using WebAPI.Models;
 
@@ -37,6 +38,10 @@ public class ExceptionMiddleware
                 .ToDictionary(x => x.Key, x => x.Values);
 
             await GenerateExceptionResponseAsync(e, context, (int)HttpStatusCode.UnprocessableEntity, validationErrors);
+        }
+        catch (EntityNotFoundException e)
+        {
+            await GenerateExceptionResponseAsync(e, context, (int)HttpStatusCode.NotFound);
         }
         catch (Exception e)
         {

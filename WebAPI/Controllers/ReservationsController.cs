@@ -1,6 +1,8 @@
 ﻿using System.Net;
 using Application.Contracts;
 using Application.Features.Commands.CreateReservation;
+using Application.Features.Commands.DeleteReservation;
+using Application.Features.Commands.UpdateReservation;
 using Application.Features.Queries.GetReservation;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -61,5 +63,41 @@ public class ReservationsController : ControllerBase
         var id = await _mediator.Send(createReservationCommand, new CancellationToken());
 
         return Created("reservations/{id}", id);
+    }
+
+    /// <summary>
+    /// Finds reservation entity based on Id property and updates entity with new parameters
+    /// </summary>
+    /// <param name="updateReservationDto"></param>
+    /// <returns></returns>
+    [HttpPut]
+    [SwaggerResponse((int)HttpStatusCode.OK)]
+    [SwaggerResponse((int)HttpStatusCode.NotFound)]
+    [SwaggerResponse((int)HttpStatusCode.UnprocessableEntity, Description = "Validation Error")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
+    public async Task<ActionResult> UpdateReservationAsync([FromBody] UpdateReservationDto updateReservationDto)
+    {
+        var updateReservationCommand = new UpdateReservationCommand(updateReservationDto);
+        await _mediator.Send(updateReservationCommand, new CancellationToken());
+
+        return Ok();
+    }
+
+    /// <summary>
+    /// Deletes reservation based on a given Id
+    /// </summary>
+    /// <param name="id">Reservation id</param>
+    /// <returns></returns>
+    [HttpDelete("{id:int}")]
+    [SwaggerResponse((int)HttpStatusCode.NoContent)]
+    [SwaggerResponse((int)HttpStatusCode.NotFound)]
+    [SwaggerResponse((int)HttpStatusCode.UnprocessableEntity, Description = "Validation Error")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
+    public async Task<ActionResult> DeleteReservationAsync(int id)
+    {
+        var deleteReservationCommand = new DeleteReservationCommand(id);
+        await _mediator.Send(deleteReservationCommand, new CancellationToken());
+
+        return NoContent();
     }
 }
