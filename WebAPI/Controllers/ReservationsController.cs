@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using Application.Contracts;
 using Application.Features.Commands.CreateReservation;
+using Application.Features.Commands.DeleteReservation;
 using Application.Features.Commands.UpdateReservation;
 using Application.Features.Queries.GetReservation;
 using MediatR;
@@ -71,14 +72,32 @@ public class ReservationsController : ControllerBase
     /// <returns></returns>
     [HttpPut]
     [SwaggerResponse((int)HttpStatusCode.OK)]
-    [SwaggerResponse((int)HttpStatusCode.BadRequest)]
+    [SwaggerResponse((int)HttpStatusCode.NotFound)]
     [SwaggerResponse((int)HttpStatusCode.UnprocessableEntity, Description = "Validation Error")]
     [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
-    public async Task<ActionResult> UpdateMovieAsync([FromBody] UpdateReservationDto updateReservationDto)
+    public async Task<ActionResult> UpdateReservationAsync([FromBody] UpdateReservationDto updateReservationDto)
     {
         var updateReservationCommand = new UpdateReservationCommand(updateReservationDto);
         await _mediator.Send(updateReservationCommand, new CancellationToken());
 
         return Ok();
+    }
+
+    /// <summary>
+    /// Deletes reservation based on a given Id
+    /// </summary>
+    /// <param name="id">Reservation id</param>
+    /// <returns></returns>
+    [HttpDelete("{id:int}")]
+    [SwaggerResponse((int)HttpStatusCode.NoContent)]
+    [SwaggerResponse((int)HttpStatusCode.NotFound)]
+    [SwaggerResponse((int)HttpStatusCode.UnprocessableEntity, Description = "Validation Error")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError)]
+    public async Task<ActionResult> DeleteReservationAsync(int id)
+    {
+        var deleteReservationCommand = new DeleteReservationCommand(id);
+        await _mediator.Send(deleteReservationCommand, new CancellationToken());
+
+        return NoContent();
     }
 }
