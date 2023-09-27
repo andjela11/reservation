@@ -10,10 +10,10 @@ public class UpdateReservationCommandValidator : AbstractValidator<UpdateReserva
         {
             RuleFor(x => x.UpdateReservationDto.Id).NotEmpty();
             RuleFor(x => x.UpdateReservationDto.Id).GreaterThan(0);
-            
+
             RuleFor(x => x.UpdateReservationDto.MovieId).NotEmpty();
             RuleFor(x => x.UpdateReservationDto.MovieId).GreaterThan(0);
-            
+
             RuleFor(x => x.UpdateReservationDto.AvailableSeats).NotEmpty();
             RuleFor(x => x.UpdateReservationDto.AvailableSeats).GreaterThan(0);
         });

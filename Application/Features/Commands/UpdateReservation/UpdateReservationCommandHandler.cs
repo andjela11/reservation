@@ -13,7 +13,7 @@ public sealed class UpdateReservationCommandHandler : IRequestHandler<UpdateRese
     {
         _context = context;
     }
-    
+
     public async Task<Unit> Handle(UpdateReservationCommand request, CancellationToken cancellationToken)
     {
         var reservation =
