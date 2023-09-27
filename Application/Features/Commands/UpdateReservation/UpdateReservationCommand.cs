@@ -3,4 +3,4 @@ using MediatR;
 
 namespace Application.Features.Commands.UpdateReservation;
 
-public record UpdateReservationCommand(UpdateReservationDto UpdateReservationDto) : IRequest<Unit>;
+public record UpdateReservationCommand(UpdateReservationDto UpdateReservationDto) : IRequest;

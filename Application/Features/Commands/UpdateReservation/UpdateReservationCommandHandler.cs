@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Commands.UpdateReservation;
 
-public sealed class UpdateReservationCommandHandler : IRequestHandler<UpdateReservationCommand, Unit>
+public sealed class UpdateReservationCommandHandler : IRequestHandler<UpdateReservationCommand>
 {
     private readonly IDataContext _context;
 
@@ -14,22 +14,20 @@ public sealed class UpdateReservationCommandHandler : IRequestHandler<UpdateRese
         _context = context;
     }
 
-    public async Task<Unit> Handle(UpdateReservationCommand request, CancellationToken cancellationToken)
+    public async Task Handle(UpdateReservationCommand request, CancellationToken cancellationToken)
     {
         var reservation =
             await _context.Reservations
                 .SingleOrDefaultAsync(x => x.Id == request.UpdateReservationDto.Id, cancellationToken);
-        if (reservation is not null)
+        if (reservation is null)
         {
-            reservation.MovieId = request.UpdateReservationDto.MovieId;
-            reservation.SeatNumbers = request.UpdateReservationDto.AvailableSeats;
-
-            _context.Reservations.Update(reservation);
-            await _context.SaveChangesAsync(cancellationToken);
-
-            return new Unit();
+            throw new EntityNotFoundException($"Entity with Id {request.UpdateReservationDto.Id} doesn't exist");
         }
 
-        throw new EntityNotFoundException($"Entity with Id {request.UpdateReservationDto.Id} doesn't exist");
+        reservation.MovieId = request.UpdateReservationDto.MovieId;
+        reservation.SeatNumbers = request.UpdateReservationDto.AvailableSeats;
+
+        _context.Reservations.Update(reservation);
+        await _context.SaveChangesAsync(cancellationToken);
     }
 }

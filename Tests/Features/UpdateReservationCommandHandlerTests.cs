@@ -31,11 +31,9 @@ public class UpdateReservationCommandHandlerTests
         var updateReservationDto = new UpdateReservationDto(1, 2, 100);
 
         // Act
-        var result =
-            await _systemUnderTest.Handle(new UpdateReservationCommand(updateReservationDto), new CancellationToken());
+        await _systemUnderTest.Handle(new UpdateReservationCommand(updateReservationDto), new CancellationToken());
 
         // Assert
-        result.Should().NotBeNull();
         reservations.First().SeatNumbers.Should().Be(updateReservationDto.AvailableSeats);
         reservations.First().MovieId.Should().Be(updateReservationDto.MovieId);
     }
