@@ -1,7 +1,6 @@
-using Application.Features.Commands.DeleteReservation;
+﻿using Application.Features.Commands.DeleteReservation;
 using Application.Interfaces;
 using Domain;
-using FluentAssertions;
 using Moq;
 using Moq.EntityFrameworkCore;
 using NUnit.Framework;
@@ -26,12 +25,12 @@ public class DeleteReservationCommandHandlerTests
         _mockContext.Setup(x => x.Reservations).ReturnsDbSet(reservations);
 
         _systemUnderTest = new DeleteReservationCommandHandler(_mockContext.Object);
-        
+
         // Act
         var result = await _systemUnderTest.Handle(new DeleteReservationCommand(idToDelete), new CancellationToken());
 
         // Assert
-        _mockContext.Verify(p =>  p.Reservations.Remove(reservations.First()), Times.Once);
+        _mockContext.Verify(p => p.Reservations.Remove(reservations.First()), Times.Once);
         _mockContext.Verify(context => context.SaveChangesAsync(new CancellationToken()), Times.Once);
     }
 }

@@ -1,4 +1,4 @@
-using Application.Features.Commands.DeleteReservation;
+﻿using Application.Features.Commands.DeleteReservation;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -16,10 +16,10 @@ public class DeleteReservationCommandValidatorTests
     {
         // Arrange
         var deleteReservationCommand = GetValidPayload();
-        
+
         // Act
         var result = _validator.Validate(deleteReservationCommand);
-        
+
         // Assert
         result.IsValid.Should().BeTrue();
     }
@@ -29,14 +29,14 @@ public class DeleteReservationCommandValidatorTests
     {
         // Arrange
         var deleteReservationCommand = GetValidPayload() with { Id = -1 };
-        
+
         // Act 
         var result = _validator.Validate(deleteReservationCommand);
-        
+
         // Assert
         result.IsValid.Should().BeFalse();
     }
-    
+
     private DeleteReservationCommand GetValidPayload()
     {
         var id = 1;

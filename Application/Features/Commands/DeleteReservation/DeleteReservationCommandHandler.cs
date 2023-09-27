@@ -13,7 +13,7 @@ public sealed class DeleteReservationCommandHandler : IRequestHandler<DeleteRese
     {
         _context = context;
     }
-    
+
     public async Task<Unit> Handle(DeleteReservationCommand request, CancellationToken cancellationToken)
     {
         var reservation = await _context.Reservations
@@ -23,7 +23,7 @@ public sealed class DeleteReservationCommandHandler : IRequestHandler<DeleteRese
         {
             _context.Reservations.Remove(reservation);
             await _context.SaveChangesAsync(cancellationToken);
-            
+
             return new Unit();
         }
 
