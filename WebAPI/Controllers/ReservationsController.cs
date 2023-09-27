@@ -4,6 +4,7 @@ using Application.Features.Commands.CreateReservation;
 using Application.Features.Commands.DeleteReservation;
 using Application.Features.Commands.UpdateReservation;
 using Application.Features.Queries.GetReservation;
+using Application.Features.Queries.GetReservationByMovieId;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
@@ -45,6 +46,25 @@ public class ReservationsController : ControllerBase
         }
         return NotFound();
     }
+
+    /// <summary>
+    /// Returns the reservation based on a specified movie ID
+    /// </summary>
+    /// <param name="movieId">Movie Id</param>
+    /// <returns><see cref="ReservationDto"/></returns>
+    [HttpGet("get-by-movieid/{movieId:int}")]
+    [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ReservationDto))]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "Reservation with the given id couldn't be found")]
+    [SwaggerResponse((int)HttpStatusCode.UnprocessableEntity, Description = "Validation error")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Unexpected event occured")]
+    public async Task<ActionResult<ReturnReservationDto>> GetReservationByMovieIdAsync(int movieId)
+    {
+        var getReservationByMovieIdQuery = new GetReservationByMovieIdQuery(movieId);
+        var reservation = await _mediator.Send(getReservationByMovieIdQuery);
+
+        return Ok(reservation);
+    }
+
 
     /// <summary>
     /// Creates the reservation entity based on specified parameter
