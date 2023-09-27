@@ -17,7 +17,13 @@ builder.Services
 
 builder.Services.AddSwaggerGen(c =>
 {
-    var callingAssemblyName = Assembly.GetEntryAssembly()?.GetName().Name;
+    var callingAssembly = Assembly.GetEntryAssembly();
+    if (callingAssembly is null)
+    {
+        throw new Exception("Calling assembly not found");
+    }
+    var callingAssemblyName = callingAssembly.GetName().Name;
+
     var xmlFile = $"{callingAssemblyName}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
