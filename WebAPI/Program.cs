@@ -17,8 +17,9 @@ builder.Services
 
 builder.Services.AddSwaggerGen(c =>
 {
-    var callingAssemblyName = Assembly.GetEntryAssembly()?.GetName().Name;
-    var xmlFile = $"{callingAssemblyName}.xml";
+    var entryAssembly = Assembly.GetEntryAssembly();
+    var entryAssemblyName = entryAssembly!.GetName().Name;
+    var xmlFile = $"{entryAssemblyName}.xml";
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
