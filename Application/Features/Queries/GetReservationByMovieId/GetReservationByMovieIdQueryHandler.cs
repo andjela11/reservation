@@ -19,7 +19,7 @@ public sealed class GetReservationByMovieIdQueryHandler : IRequestHandler<GetRes
     {
         var reservation =
             await _context.Reservations
-                .SingleOrDefaultAsync(x => x.MovieId == request.MovieId, new CancellationToken());
+                .SingleOrDefaultAsync(x => x.MovieId == request.MovieId, cancellationToken);
 
         if (reservation is null)
         {
