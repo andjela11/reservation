@@ -14,7 +14,7 @@ public class DataContext : DbContext, IDataContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         var reservations = new List<Reservation>();
-        for (var i = 0; i < 10; i++)
+        for (var i = 0; i < 20; i++)
         {
             var reservation = new Reservation()
             {

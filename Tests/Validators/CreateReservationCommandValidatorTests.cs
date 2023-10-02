@@ -79,7 +79,7 @@ public class CreateReservationCommandValidatorTests
 
     private CreateReservationCommand GetValidPayload()
     {
-        var createReservation = new CreateReservationDto(MovieId: 2, AvailableSeats: 250);
+        var createReservation = new CreateReservationDto(MovieId: 2, NumberOfSeats: 250);
         return new CreateReservationCommand(createReservation);
     }
 }

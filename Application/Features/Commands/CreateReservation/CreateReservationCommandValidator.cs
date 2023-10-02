@@ -9,7 +9,7 @@ public class CreateReservationCommandValidator : AbstractValidator<CreateReserva
         When(x => x.ReservationDto is not null, () =>
         {
             RuleFor(x => x.ReservationDto.MovieId).GreaterThan(0);
-            RuleFor(x => x.ReservationDto.AvailableSeats).GreaterThan(0);
+            RuleFor(x => x.ReservationDto.NumberOfSeats).GreaterThan(0);
         });
     }
 }

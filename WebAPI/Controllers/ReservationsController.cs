@@ -3,6 +3,7 @@ using Application.Contracts;
 using Application.Features.Commands.CreateReservation;
 using Application.Features.Commands.DeleteReservation;
 using Application.Features.Commands.UpdateReservation;
+using Application.Features.Queries.GetAllReservations;
 using Application.Features.Queries.GetReservation;
 using Application.Features.Queries.GetReservationByMovieId;
 using MediatR;
@@ -25,6 +26,26 @@ public class ReservationsController : ControllerBase
         _mediator = mediator;
     }
 
+    /// <summary>
+    /// Returns all available reservations 
+    /// </summary>
+    /// <returns>List of <see cref="ReturnReservationDto"/></returns>
+    [HttpGet]
+    [SwaggerResponse((int)HttpStatusCode.OK, Type = typeof(ReturnReservationDto))]
+    [SwaggerResponse((int)HttpStatusCode.NotFound, Description = "Reservation with the given id couldn't be found")]
+    [SwaggerResponse((int)HttpStatusCode.InternalServerError, Description = "Unexpected event occured")]
+    public async Task<ActionResult<List<ReturnReservationDto>>> GetAllReservationsAsync()
+    {
+        var getAllReservationsQuery = new GetAllReservationsQuery();
+        var reservation = await _mediator.Send(getAllReservationsQuery);
+
+        if (reservation.Count > 0)
+        {
+            return Ok(reservation);
+        }
+        return NotFound();
+    }
+    
     /// <summary>
     /// Returns the reservation based on a specified ID
     /// </summary>
