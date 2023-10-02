@@ -2,7 +2,7 @@
 
 namespace Application.Contracts;
 
-public record CreateReservationDto(int MovieId, int AvailableSeats)
+public record CreateReservationDto(int MovieId, int NumberOfSeats)
 {
-    public Reservation ToCreateReservation() => new() { MovieId = MovieId, SeatNumbers = AvailableSeats };
+    public Reservation ToCreateReservation() => new() { MovieId = MovieId, SeatNumbers = NumberOfSeats };
 }

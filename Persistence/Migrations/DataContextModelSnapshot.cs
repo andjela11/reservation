@@ -94,6 +94,66 @@ namespace Persistence.Migrations
                             Id = 10,
                             MovieId = 10,
                             SeatNumbers = 250
+                        },
+                        new
+                        {
+                            Id = 11,
+                            MovieId = 11,
+                            SeatNumbers = 250
+                        },
+                        new
+                        {
+                            Id = 12,
+                            MovieId = 12,
+                            SeatNumbers = 250
+                        },
+                        new
+                        {
+                            Id = 13,
+                            MovieId = 13,
+                            SeatNumbers = 250
+                        },
+                        new
+                        {
+                            Id = 14,
+                            MovieId = 14,
+                            SeatNumbers = 250
+                        },
+                        new
+                        {
+                            Id = 15,
+                            MovieId = 15,
+                            SeatNumbers = 250
+                        },
+                        new
+                        {
+                            Id = 16,
+                            MovieId = 16,
+                            SeatNumbers = 250
+                        },
+                        new
+                        {
+                            Id = 17,
+                            MovieId = 17,
+                            SeatNumbers = 250
+                        },
+                        new
+                        {
+                            Id = 18,
+                            MovieId = 18,
+                            SeatNumbers = 250
+                        },
+                        new
+                        {
+                            Id = 19,
+                            MovieId = 19,
+                            SeatNumbers = 250
+                        },
+                        new
+                        {
+                            Id = 20,
+                            MovieId = 20,
+                            SeatNumbers = 250
                         });
                 });
 #pragma warning restore 612, 618
